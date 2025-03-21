@@ -47,11 +47,8 @@ p1.dump(preditor_linear_model, preditor_Pickle)
 # Dados de Teste
 #import.... + data =
 evaluation_data=data[3133:]
-data_X=evaluation_data.iloc[:,0:11]
-data_Y=evaluation_data.iloc[:,0:11]
+data_X=evaluation_data.iloc[:,0:8]
+data_Y=evaluation_data.iloc[:,7:8]
 print(type(evaluation_data))
 print(type(data_X))
 loaded_model = p1.load(open('../white-wine_quality_predictor', 'rb'))
-print("Coefficients: \n", loaded_model.coef_)
-y_pred=loaded_model.predict(data_X)
-z_pred=y_pred-data_Y
