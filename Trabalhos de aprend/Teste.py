@@ -14,7 +14,7 @@ data_Y=evaluation_data.iloc[:,9:10]
 print(type(evaluation_data))
 print(type(data_X))
 
-loaded_model = p1.load(open('abalone_model.pkl', 'rb'))
+loaded_model = p1.load(open('abalone.data', 'rb'))
 print("Coefficients: \n", loaded_model.coef_)
 y_pred = loaded_model.predict(data_X)
 z_pred = y_pred - data_Y.values
