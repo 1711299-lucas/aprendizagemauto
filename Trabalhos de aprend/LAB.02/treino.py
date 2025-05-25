@@ -19,7 +19,6 @@ print(y)
 clf = neighbors.KNeighborsClassifier(n_neighbors, weights="uniform")
 clf.fit(X, y)
 
-
 preditor_Pickle = open('optdigitspredict', 'wb')
 print("optdigitspredict")
 p1.dump(clf, preditor_Pickle)
