@@ -3,41 +3,23 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from matplotlib.colors import ListedColormap
 from sklearn import neighbors, datasets
-from sklearn.neighbors import KNeighborsClassifier
-
+import pandas as pd
+import pickle as p1
 n_neighbors = 15
 # import some data to play with
-iris = datasets.load_iris()
-X = iris.data[:, :2]
-y = iris.target
-h = 0.02 # step size in the mesh
-cmap_light = ListedColormap(["orange", "cyan", "cornflowerblue"])
-cmap_bold = ["darkorange", "c", "darkblue"]
+"""iris = datasets.load_iris()"""
+data = pd.read_csv("./Data-set/optdigits.tra", sep=",", header=None)
+X = data.iloc[ :, :64]
+y = data.iloc[ :, 64:]
+y=np.array(y).T[0]
 
-for weights in ["uniform", "distance"]:
-    clf = neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
-    clf.fit(X, y)
-    # point in the mesh [x_min, x_max]x[y_min, y_max].
-    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
-    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
-    # Put the result into a color plot
-    Z = Z.reshape(xx.shape)
-    plt.figure(figsize=(8, 6))
-    plt.contourf(xx, yy, Z, cmap=cmap_light)
+print(X)
+print(y)
 
-# Plot also the training points
-sns.scatterplot(
-    x=X[:, 0],
-    y=X[:, 1],
-    hue=iris.target_names[y],
-    palette=cmap_bold,
-    alpha=1.0,
-    edgecolor="black",)
-plt.xlim(xx.min(), xx.max())
-plt.ylim(yy.min(), yy.max())
-plt.title(
-    "3-Class classification (k = %i, weights = '%s')" % (n_neighbors, weights))
-plt.xlabel(iris.feature_names[0])
-plt.ylabel(iris.feature_names[1])
+clf = neighbors.KNeighborsClassifier(n_neighbors, weights="uniform")
+clf.fit(X, y)
+
+
+preditor_Pickle = open('optdigitspredict', 'wb')
+print("optdigitspredict")
+p1.dump(clf, preditor_Pickle)
